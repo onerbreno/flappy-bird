@@ -1,10 +1,32 @@
 * {
     box-sizing: border-box;
+    /* margin: 0;
+    padding: 0; */
 }
 
 @font-face {
     font-family: 'Pixel';
-    src: url(../fonts//Pixel.ttf);
+    src: url(./fonts//Pixel.ttf);
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    background-color: #0D262D;
+    color: #fff;
+    height: 100%;
+    overflow: hidden;
+}
+
+.conteudo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
 }
 
 [wm-flappy] {
@@ -21,7 +43,6 @@
     position: absolute;
     width: 60px;
     left: calc(50% - 30px);
-    bottom: 50%;
 }
 
 .par-de-barreiras {
