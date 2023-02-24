@@ -76,8 +76,10 @@ function Passaro(alturaJogo) {
 
     window.onkeydown = e => voando = true
     window.onkeyup = e => voando = false
+
     window.onmousedown = e => e.button == 0 ? voando = true : ''
     window.onmouseup = e => voando = false
+
     window.onselectstart = e => e.preventDefault()
 
     this.animar = () => {
@@ -108,19 +110,17 @@ function estaoSobrepostos(elementoA, elementoB) {
     const a = elementoA.getBoundingClientRect()
     const b = elementoB.getBoundingClientRect()
 
-    const direitaA = a.left + a.width
-    const direitaB = b.left + b.width
-    const horizontal = direitaA >= b.left && direitaB >= a.left
-    const vertical = a.bottom >= b.top && b.bottom >= a.top
+    const horizontal = a.right >= b.left && a.right >= a.left
+    const vertical = a.top + a.height >= b.top && b.top + b.height >= a.top
     return horizontal && vertical
 }
 
 function colidiu(passaro, barreiras) {
     let colidiu = false
-    barreiras.pares.forEach(parDeBarreiras => {
+    barreiras.pares.forEach(par => {
         if (!colidiu) {
-            const superior = parDeBarreiras.superior.elemento
-            const inferior = parDeBarreiras.inferior.elemento
+            const superior = par.superior.elemento
+            const inferior = par.inferior.elemento
             colidiu = estaoSobrepostos(passaro.elemento, superior) || estaoSobrepostos(passaro.elemento, inferior)
         }
     })
