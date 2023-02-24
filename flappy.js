@@ -104,6 +104,29 @@ function Progresso() {
     this.atualizarPontos(0)
 }
 
+function estaoSobrepostos(elementoA, elementoB) {
+    const a = elementoA.getBoundingClientRect()
+    const b = elementoB.getBoundingClientRect()
+
+    const direitaA = a.left + a.width
+    const direitaB = b.left + b.width
+    const horizontal = direitaA >= b.left && direitaB >= a.left
+    const vertical = a.bottom >= b.top && b.bottom >= a.top
+    return horizontal && vertical
+}
+
+function colidiu(passaro, barreiras) {
+    let colidiu = false
+    barreiras.pares.forEach(parDeBarreiras => {
+        if (!colidiu) {
+            const superior = parDeBarreiras.superior.elemento
+            const inferior = parDeBarreiras.inferior.elemento
+            colidiu = estaoSobrepostos(passaro.elemento, superior) || estaoSobrepostos(passaro.elemento, inferior)
+        }
+    })
+    return colidiu
+}
+
 function FlappyBird() {
     let pontos = 0
     const areaDoJogo = document.querySelector('[wm-flappy]')
@@ -123,10 +146,16 @@ function FlappyBird() {
     this.start = () => {
         // loop do jogo
         const temporizador = setInterval(() => {
-            barreiras.animar()
-            passaro.animar()
-        }, 20)
-    }
+                barreiras.animar()
+                passaro.animar()
+
+                if (colidiu(passaro, barreiras)) {
+                    clearInterval(temporizador)
+                    window.onclick = e => location.reload()
+                    window.onkeydown = e => location.reload()
+                }
+            }, 20)
+        }
 }
 
 new FlappyBird().start()
