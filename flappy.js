@@ -74,7 +74,7 @@ function Passaro(alturaJogo) {
     this.getY = () => parseInt(this.elemento.style.bottom.split('px')[0])
     this.setY = y => this.elemento.style.bottom = `${y}px`
     
-
+    window.oncontextmenu = e => e.preventDefault()
     window.onselectstart = e => e.preventDefault()
     
     window.onkeydown = e => voando = true
@@ -83,6 +83,9 @@ function Passaro(alturaJogo) {
     window.onmousedown = e => voando = true
     window.onmouseup = e => voando = false
 
+    
+    window.ontouchstart = e => voando = true;
+    window.ontouchend = e => voando = false;
     
 
     this.animar = () => {
