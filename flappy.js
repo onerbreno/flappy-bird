@@ -73,14 +73,17 @@ function Passaro(alturaJogo) {
 
     this.getY = () => parseInt(this.elemento.style.bottom.split('px')[0])
     this.setY = y => this.elemento.style.bottom = `${y}px`
+    
 
+    window.onselectstart = e => e.preventDefault()
+    
     window.onkeydown = e => voando = true
     window.onkeyup = e => voando = false
 
-    window.onmousedown = e => e.button == 0 ? voando = true : ''
+    window.onmousedown = e => voando = true
     window.onmouseup = e => voando = false
 
-    window.onselectstart = e => e.preventDefault()
+    
 
     this.animar = () => {
         const novoY = this.getY() + (voando ? 8 : -5)
@@ -110,7 +113,7 @@ function estaoSobrepostos(elementoA, elementoB) {
     const a = elementoA.getBoundingClientRect()
     const b = elementoB.getBoundingClientRect()
 
-    const horizontal = a.right >= b.left && a.right >= a.left
+    const horizontal = a.left + a.width >= b.left && b.left + b.width >= a.left
     const vertical = a.top + a.height >= b.top && b.top + b.height >= a.top
     return horizontal && vertical
 }
@@ -146,16 +149,16 @@ function FlappyBird() {
     this.start = () => {
         // loop do jogo
         const temporizador = setInterval(() => {
-                barreiras.animar()
-                passaro.animar()
+            barreiras.animar()
+            passaro.animar()
 
-                if (colidiu(passaro, barreiras)) {
-                    clearInterval(temporizador)
-                    window.onclick = e => location.reload()
-                    window.onkeydown = e => location.reload()
-                }
-            }, 20)
-        }
+            if (colidiu(passaro, barreiras)) {
+                clearInterval(temporizador)
+                window.onclick = e => location.reload()
+                window.onkeydown = e => location.reload()
+            }
+        }, 20)
+    }
 }
 
 new FlappyBird().start()
