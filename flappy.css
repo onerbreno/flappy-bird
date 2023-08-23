@@ -1,7 +1,5 @@
 * {
     box-sizing: border-box;
-    /* margin: 0;
-    padding: 0; */
 }
 
 @font-face {
@@ -31,10 +29,8 @@ body {
 
 [wm-flappy] {
     position: relative;
-    border: 5px solid dodgerblue;
-    height: 700px;
-    width: 1200px;
-    margin: 15px;
+    height: 100%;
+    width: 100%;
     background-color: deepskyblue;
     overflow: hidden;
 }
